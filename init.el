@@ -53,7 +53,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -224,6 +224,9 @@
 (use-package yasnippet
   :config
   (yas-global-mode 1))
+
+;; set magit
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (setenv "ANDROID_NDK_ROOT" "/Nuance/Dev/DevTools/android/ndk-bundle")
 ;;; init.el ends here
