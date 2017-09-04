@@ -9,6 +9,24 @@
    '("marmalade" . "http://elpa.emacs-china.org/marmalade/")
    ))
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(menu-bar-mode nil)
+ '(package-selected-packages
+   (quote
+    (magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+ '(scroll-bar-mode nil)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "D2Coding for Powerline" :foundry "RIXF" :slant normal :weight normal :height 143 :width normal)))))
+
 ;; set key-bind
 (require 'bind-key)
 
@@ -45,23 +63,6 @@
   (global-set-key [(shift f3)] 'highlight-symbol-prev)
   (global-set-key [(meta f3)] 'highlight-symbol-query-replace)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(menu-bar-mode nil)
- '(package-selected-packages
-   (quote
-    (magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
- '(scroll-bar-mode nil)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "D2Coding for Powerline" :foundry "RIXF" :slant normal :weight normal :height 143 :width normal)))))
 
 ;; show current buffer file name in title
 (setq frame-title-format
@@ -84,8 +85,8 @@
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1)
-              (setq c-default-style "linux")
-              (setq c-basic-offset 4)
+              (setq c-default-style "linux"
+                    c-basic-offset 4)
               (indent-space-count 4)
               (aggressive-indent-mode 1))))
 ;; set gtags view as ivy
@@ -121,11 +122,10 @@
               (google-set-c-style)
               (google-make-newline-indent)
               (meghanada-mode t)
-              (setq c-default-style "linux")
-              (setq c-basic-offset 4)
+              (setq c-default-style "linux"
+                    c-basic-offset 4)
               (indent-space-count 4)
               (aggressive-indent-mode 1)
-              (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
               (add-to-list 'company-backends 'company-gtags)))
   )
 
