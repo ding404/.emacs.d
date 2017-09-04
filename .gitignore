@@ -1,2 +1,5 @@
 projectile-bookmarks.eld
 var/
+auto-save-list/
+elpa/*.txt
+elpa/archives/
