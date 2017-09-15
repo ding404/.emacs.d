@@ -14,10 +14,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ediff-diff-options "-w")
+ '(ediff-split-window-function (quote split-window-horizontally))
+ '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (bash-completion magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -155,7 +158,7 @@
 
 (use-package smartparens-config
   :config
-  (smartparens-global-strict-mode)
+  (smartparens-global-mode)
   (delete-selection-mode)
   (define-key smartparens-mode-map (kbd "C-M-{") 'sp-backward-up-sexp)
   (define-key smartparens-mode-map (kbd "C-M-}") 'sp-down-sexp)
@@ -175,7 +178,7 @@
   (global-set-key (kbd "C-x .") 'back-button-local-forward)
   )
 
-
+;; C-c <left> restoring window
 (winner-mode)
 ;; set ace window
 ;; x - delete window
@@ -227,6 +230,22 @@
 
 ;; set magit
 (global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x l") 'magit-log)
+(add-hook 'magit-diff-mode-hook
+          (lambda ()
+            (setq magit-diff-refine-hunk t)
+            (setq magit-diff-hide-trailing-cr-characters t)))
+
+;; set bash completion
+(use-package bash-completion
+  :config
+  (bash-completion-setup))
+(when (require 'bash-completion nil t)
+  (setq eshell-default-completion-function 'eshell-bash-completion))
+(defun eshell-bash-completion ()
+  (while (pcomplete-here
+          (nth 2 (bash-completion-dynamic-complete-nocomint (save-excursion (eshell-bol) (point)) (point))))))
+
 
 (setenv "ANDROID_NDK_ROOT" "/Nuance/Dev/DevTools/android/ndk-bundle")
 ;;; init.el ends here
