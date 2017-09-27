@@ -246,6 +246,14 @@
   (while (pcomplete-here
           (nth 2 (bash-completion-dynamic-complete-nocomint (save-excursion (eshell-bol) (point)) (point))))))
 
+;; set doxymacs
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp")
+(require 'doxymacs)
+(add-hook 'c-mode-hook 'doxymacs-mode)
+(add-hook 'c++-mode-hook 'doxymacs-mode)
+(add-hook 'java-mode-hook 'doxymacs-mode)
 
+
+(setq tramp-default-method "sshx")
 (setenv "ANDROID_NDK_ROOT" "/Nuance/Dev/DevTools/android/ndk-bundle")
 ;;; init.el ends here
