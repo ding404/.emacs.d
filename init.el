@@ -7,6 +7,7 @@
    ;;'("gnu" . "http://elpa.emacs-china.org/gnu/")
    '("melpa" . "http://elpa.emacs-china.org/melpa/")
    '("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+   ;;'("elpy" . "http://jorgenschaefer.github.io/packages/")
    ))
 
 (custom-set-variables
@@ -20,7 +21,8 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (bash-completion magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (elpy psvn monky bash-completion magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+ '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -88,6 +90,13 @@
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1)
+              (setq c-default-style "linux"
+                    c-basic-offset 4)
+              (indent-space-count 4)
+              (aggressive-indent-mode 1))))
+(add-hook 'python-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'python-mode)
               (setq c-default-style "linux"
                     c-basic-offset 4)
               (indent-space-count 4)
@@ -236,6 +245,14 @@
             (setq magit-diff-refine-hunk t)
             (setq magit-diff-hide-trailing-cr-characters t)))
 
+;; set monky (magit for hg)
+(use-package monky
+  :config
+  (setq monky-process-type 'cmdserver))
+
+;; set psvn
+(use-package psvn)
+
 ;; set bash completion
 (use-package bash-completion
   :config
@@ -252,7 +269,10 @@
 (add-hook 'c-mode-hook 'doxymacs-mode)
 (add-hook 'c++-mode-hook 'doxymacs-mode)
 (add-hook 'java-mode-hook 'doxymacs-mode)
+(add-hook 'python-mode-hook 'doxymacs-mode)
 
+;; set elpy
+(elpy-enable)
 
 (setq tramp-default-method "sshx")
 (setenv "ANDROID_NDK_ROOT" "/Nuance/Dev/DevTools/android/ndk-bundle")
