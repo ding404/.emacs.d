@@ -21,7 +21,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (elpy psvn monky bash-completion magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
@@ -253,6 +253,9 @@
 ;; set psvn
 (use-package psvn)
 
+;; set p4
+(use-package p4)
+
 ;; set bash completion
 (use-package bash-completion
   :config
@@ -273,6 +276,13 @@
 
 ;; set elpy
 (elpy-enable)
+
+;; set bing-dict
+(use-package bing-dict
+  :config
+  (global-set-key (kbd "C-c d") 'bing-dict-brief)
+  (global-set-key (kbd "C-c f") 'bing-dict-full-in-new-window)
+  (setq bing-dict-show-thesaurus 'both))
 
 (setq tramp-default-method "sshx")
 (setenv "ANDROID_NDK_ROOT" "/Nuance/Dev/DevTools/android/ndk-bundle")
