@@ -21,7 +21,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags aggressive-indent browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
@@ -45,8 +45,24 @@
 
 ;; set neotree
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+(global-set-key [f8] (lambda () (interactive) (if (neo-global--window-exists-p)
+                                                  (neotree-hide)
+                                                (neotree-find))))
+(defun neotree-resize-window (&rest _args)
+  "Resize neotree window.
+https://github.com/jaypei/emacs-neotree/pull/110"
+  (interactive)
+  (neo-buffer--with-resizable-window
+   (let ((fit-window-to-buffer-horizontally t))
+     (fit-window-to-buffer))))
+(add-hook 'neo-change-root-hook #'neotree-resize-window)
+(add-hook 'neo-enter-hook #'neotree-resize-window)
 
+;; set imenu list
+(global-set-key [f9] #'imenu-list-smart-toggle)
+(setq imenu-list-auto-resize t)
+
+;; set undo-tree
 (global-undo-tree-mode) ; undo tree branch
 (setq make-backup-files nil) ; stop creating backup~ files
 (setq auto-save-default nil) ; stop creating #autosave# files
@@ -105,11 +121,11 @@
 (add-hook 'c-mode-hook 'counsel-gtags-mode)
 (add-hook 'c++-mode-hook 'counsel-gtags-mode)
 (add-hook 'java-mode-hook 'counsel-gtags-mode)
-(with-eval-after-load 'counsel-gtags
-  (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
-  (define-key counsel-gtags-mode-map (kbd "M-]") 'counsel-gtags-find-reference)
-  (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-  (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward))
+;; (with-eval-after-load 'counsel-gtags
+;;   (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
+;;   (define-key counsel-gtags-mode-map (kbd "M-]") 'counsel-gtags-find-reference)
+;;   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+;;   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward))
 ;; set company
 (add-hook 'after-init-hook 'global-company-mode)
 (eval-after-load 'company
