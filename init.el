@@ -77,6 +77,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (global-highlight-parentheses-mode)
 (setq display-time-24hr-format 't)
 (display-time-mode)
+(column-number-mode)
 (use-package highlight-symbol
   :config
   (global-set-key [(control f3)] 'highlight-symbol)
@@ -110,6 +111,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
                     c-basic-offset 4)
               (indent-space-count 4)
               (aggressive-indent-mode 1))))
+(setq ggtags-global-abbreviate-filename 150)
 (add-hook 'python-mode-hook
           (lambda ()
             (when (derived-mode-p 'python-mode)
@@ -118,9 +120,9 @@ https://github.com/jaypei/emacs-neotree/pull/110"
               (indent-space-count 4)
               (aggressive-indent-mode 1))))
 ;; set gtags view as ivy
-(add-hook 'c-mode-hook 'counsel-gtags-mode)
-(add-hook 'c++-mode-hook 'counsel-gtags-mode)
-(add-hook 'java-mode-hook 'counsel-gtags-mode)
+;; (add-hook 'c-mode-hook 'counsel-gtags-mode)
+;; (add-hook 'c++-mode-hook 'counsel-gtags-mode)
+;; (add-hook 'java-mode-hook 'counsel-gtags-mode)
 ;; (with-eval-after-load 'counsel-gtags
 ;;   (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
 ;;   (define-key counsel-gtags-mode-map (kbd "M-]") 'counsel-gtags-find-reference)
