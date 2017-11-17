@@ -68,6 +68,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (setq auto-save-default nil) ; stop creating #autosave# files
 
 ;; set emacs UI
+(setq bidi-display-reordering nil)
 (setq fancy-splash-image "~/Pictures/xyy.jpeg")
 (load-theme 'material t)
 ;; set all the icons
