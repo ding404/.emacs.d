@@ -19,8 +19,8 @@ If L and R are provided, use them for finding the start and end of defun.
 
 (autoload 'aggressive-indent-indent-region-and-on "aggressive-indent" "\
 Indent region between L and R, and then some.
-Call `indent-region' between L and R, and then keep indenting
-until nothing more happens.
+Call `aggressive-indent-region-function' between L and R, and
+then keep indenting until nothing more happens.
 
 \(fn L R)" t nil)
 
