@@ -21,7 +21,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
@@ -145,20 +145,20 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   :ensure t
   :commands
   (google-set-c-style))
-(use-package meghanada
-  :defer t
-  :init
-  (add-hook 'java-mode-hook
-            (lambda ()
-              (google-set-c-style)
-              (google-make-newline-indent)
-              (meghanada-mode t)
-              (setq c-default-style "linux"
-                    c-basic-offset 4)
-              (indent-space-count 4)
-              (aggressive-indent-mode 1)
-              (add-to-list 'company-backends 'company-gtags)))
-  )
+;; (use-package meghanada
+;;   :defer t
+;;   :init
+;;   (add-hook 'java-mode-hook
+;;             (lambda ()
+;;               (google-set-c-style)
+;;               (google-make-newline-indent)
+;;               (meghanada-mode t)
+;;               (setq c-default-style "linux"
+;;                     c-basic-offset 4)
+;;               (indent-space-count 4)
+;;               (aggressive-indent-mode 1)
+;;               (add-to-list 'company-backends 'company-gtags)))
+;;   )
 
 ;; set ivy
 (ivy-mode 1)
@@ -245,8 +245,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
 (use-package projectile
   :config
-  (projectile-mode)
-  (counsel-projectile-on))
+  (projectile-mode))
 
 (use-package browse-kill-ring)
 (use-package browse-kill-ring+)
@@ -308,4 +307,10 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
 ;; set proxy
 (use-package proxy)
+
+;; set ipython and EIN(emacs ipython notebook)
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
+(require 'ein)
+
 ;;; init.el ends here
