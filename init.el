@@ -21,7 +21,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode meghanada counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (javadoc-lookup ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
@@ -156,9 +156,14 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 ;;               (setq c-default-style "linux"
 ;;                     c-basic-offset 4)
 ;;               (indent-space-count 4)
-;;               (aggressive-indent-mode 1)
-;;               (add-to-list 'company-backends 'company-gtags)))
+;;               (aggressive-indent-mode 1)))
 ;;   )
+
+;; set javadoc lookup
+(global-set-key (kbd "C-h j") 'javadoc-lookup)
+(javadoc-add-artifacts )
+(javadoc-add-roots "/Nuance/Dev/DevTools/jdk1.8.0_162/docs"
+                   "/Nuance/Dev/DevTools/android/docs")
 
 ;; set ivy
 (ivy-mode 1)
@@ -294,6 +299,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
 ;; set elpy
 (elpy-enable)
+(pyvenv-activate "/Nuance/Dev/Virtualenv/python2_usc4_tk_tensorflow_gpu")
 
 ;; set bing-dict
 (use-package bing-dict
@@ -305,12 +311,16 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (setq tramp-default-method "sshx")
 (setenv "ANDROID_NDK_ROOT" "/Nuance/Dev/DevTools/android/ndk-bundle")
 
-;; set proxy
-(use-package proxy)
-
 ;; set ipython and EIN(emacs ipython notebook)
 (setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--simple-prompt -i")
+      python-shell-interpreter-args "--simple-prompt -i"
+      python-shell-prompt-detect-enabled nil
+      python-shell-completion-native-enable nil)
 (require 'ein)
+(require 'ein-loaddefs)
+(require 'ein-notebook)
+(require 'ein-subpackages)
+(setq ein:jupyter-default-notebook-directory "/Nuance/Dev/Virtualenv/python2_usc4_tk_tensorflow_gpu/workspace/notebook"
+      ein:worksheet-enable-undo 'full)
 
 ;;; init.el ends here
