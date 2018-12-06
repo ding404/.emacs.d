@@ -1,5 +1,4 @@
 ;; set package list url
-(package-initialize)
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list
@@ -68,7 +67,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 
 ;; set emacs UI
 (setq bidi-display-reordering nil)
-(setq fancy-splash-image "~/Pictures/xyy.jpeg")
+(setq fancy-splash-image "~/.emacs.d/xyy.jpeg")
 (load-theme 'material t)
 ;; set all the icons
 (require 'all-the-icons)
