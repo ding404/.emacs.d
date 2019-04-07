@@ -21,7 +21,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (pyimport json-mode tide js2-refactor js2-mode web-mode javadoc-lookup ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (importmagic json-mode tide js2-refactor js2-mode web-mode javadoc-lookup ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
@@ -302,6 +302,9 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 ;; set elpy
 (elpy-enable)
 (pyvenv-activate "/dj/Tools/binary/miniconda3/envs/fastai-gpu")
+
+;; set importmagic
+(add-hook 'python-mode-hook 'importmagic-mode)
 
 ;; set bing-dict
 (use-package bing-dict
