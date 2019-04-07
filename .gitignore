@@ -2,6 +2,7 @@ projectile-bookmarks.eld
 var/
 auto-save-list/
 elpa/*.txt
+*.pyc
 elpa/archives/
 recentf
 eshell/
