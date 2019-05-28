@@ -374,4 +374,12 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 ;; configure javascript-tide checker to run after your default javascript checker
 ;; (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
 
+;; set eshell env
+(setenv "PATH"
+        (concat
+         (getenv "ANDROID_NDK_ROOT") "/bin" ":"
+         (getenv "PATH") ; inherited from OS
+  )
+)
+
 ;;; init.el ends here
