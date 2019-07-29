@@ -21,7 +21,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (importmagic json-mode tide js2-refactor js2-mode web-mode javadoc-lookup ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode javadoc-lookup ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ google-c-style autodisass-java-bytecode counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
@@ -109,11 +109,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (add-hook 'c-mode-common-hook
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-              (ggtags-mode 1)
-              (setq c-default-style "linux"
-                    c-basic-offset 4)
-              (indent-space-count 4)
-              (aggressive-indent-mode 1))))
+              (ggtags-mode 1))))
 (setq ggtags-global-abbreviate-filename 150)
 (add-hook 'python-mode-hook
           (lambda ()
@@ -381,5 +377,19 @@ https://github.com/jaypei/emacs-neotree/pull/110"
          (getenv "PATH") ; inherited from OS
   )
 )
+
+;; set clang-format
+(require 'clang-format)
+(require 'f)
+(defun clang-format-buffer-smart ()
+  "Reformat buffer if .clang-format exists in the projectile root."
+  (when (f-exists? (expand-file-name ".clang-format" (projectile-project-root)))
+    (clang-format-buffer)))
+(defun clang-format-buffer-smart-on-save ()
+  "Add auto-save hook for clang-format-buffer-smart."
+  (add-hook 'before-save-hook 'clang-format-buffer-smart nil t))
+(add-hook 'c-mode-hook 'clang-format-buffer-smart-on-save)
+(add-hook 'c++-mode-hook 'clang-format-buffer-smart-on-save)
+(add-hook 'java-mode-hook 'clang-format-buffer-smart-on-save)
 
 ;;; init.el ends here
