@@ -378,13 +378,13 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (add-hook 'lsp-after-open-hook
           (lambda ()
             (define-key lsp-mode-map (kbd "M-q") 'lsp-find-definition)
-            (define-key lsp-mode-map (kbd "M-w") 'lsp-find-references)
+            (define-key lsp-mode-map (kbd "M-r") 'lsp-find-references)
             (define-key lsp-mode-map (kbd "C-l d") 'lsp-find-declaration)
             (define-key lsp-mode-map (kbd "C-l i") 'lsp-find-implementation)
             (define-key lsp-mode-map (kbd "C-l r") 'lsp-ui-peek-find-references)))
 ;; set emacs-ccls
 (require 'ccls)
-(setq ccls-executable "/Nuance/Tools/Fundament/bin/ccls")
+(setq ccls-executable "/Nuance/.emacs.d/exec/ccls")
 (setq ccls-sem-highlight-method 'font-lock)
 ;;set lsp-treemacs
 (use-package treemacs
