@@ -384,7 +384,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
             (define-key lsp-mode-map (kbd "C-l r") 'lsp-ui-peek-find-references)))
 ;; set emacs-ccls
 (require 'ccls)
-(setq ccls-executable "/Nuance/.emacs.d/exec/ccls")
+(setq ccls-executable "~/.emacs.d/exec/ccls")
 (setq ccls-sem-highlight-method 'font-lock)
 ;;set lsp-treemacs
 (use-package treemacs
