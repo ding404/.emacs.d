@@ -32,6 +32,8 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "D2Coding for Powerline" :foundry "RIXF" :slant normal :weight normal :height 143 :width normal)))))
 
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
 ;; set key-bind
 (require 'bind-key)
 
@@ -281,7 +283,6 @@ https://github.com/jaypei/emacs-neotree/pull/110"
           (nth 2 (bash-completion-dynamic-complete-nocomint (save-excursion (eshell-bol) (point)) (point))))))
 
 ;; set doxymacs
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp")
 (require 'doxymacs)
 (add-hook 'c-mode-hook 'doxymacs-mode)
 (add-hook 'c++-mode-hook 'doxymacs-mode)
