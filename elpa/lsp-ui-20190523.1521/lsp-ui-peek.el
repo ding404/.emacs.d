@@ -589,6 +589,12 @@ KIND is ‘references’, ‘definitions’ or a custom kind."
   (lsp-ui-peek--find-xrefs (symbol-at-point) "textDocument/definition"
                            (append extra (lsp--text-document-position-params))))
 
+(defun lsp-ui-peek-find-declaration (&optional extra)
+  "Find declaration to the IDENTIFIER at point."
+  (interactive)
+  (lsp-ui-peek--find-xrefs (symbol-at-point) "textDocument/declaration"
+                           (append extra (lsp--text-document-position-params))))
+
 (defun lsp-ui-peek-find-implementation (&optional extra)
   "Find implementation locations of the symbol at point."
   (interactive)

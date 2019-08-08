@@ -378,11 +378,12 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (setq lsp-prefer-flymake nil)
 (add-hook 'lsp-after-open-hook
           (lambda ()
-            (define-key lsp-mode-map (kbd "M-q") 'lsp-find-definition)
-            (define-key lsp-mode-map (kbd "M-r") 'lsp-find-references)
-            (define-key lsp-mode-map (kbd "C-l d") 'lsp-find-declaration)
-            (define-key lsp-mode-map (kbd "C-l i") 'lsp-find-implementation)
-            (define-key lsp-mode-map (kbd "C-l r") 'lsp-ui-peek-find-references)))
+            (define-key lsp-mode-map (kbd "M-q") 'lsp-ui-peek-find-definitions)
+            (define-key lsp-mode-map (kbd "M-r") 'lsp-ui-peek-find-references)
+            (define-key lsp-mode-map (kbd "C-l d") 'lsp-ui-peek-find-declaration)
+            (define-key lsp-mode-map (kbd "C-l i") 'lsp-ui-peek-find-implementation)
+            (define-key lsp-mode-map (kbd "C-l w") 'lsp-ui-peek-find-workspace-symbol)
+            (define-key lsp-mode-map (kbd "C-l c") 'lsp-ui-peek-find-custom)))
 ;; set emacs-ccls
 (require 'ccls)
 (setq ccls-executable "~/.emacs.d/exec/ccls")
