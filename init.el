@@ -111,6 +111,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (add-hook 'c-mode-common-hook
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+              (setq c-default-style "linux"
+                    c-basic-offset 4)
               (ggtags-mode 1))))
 (setq ggtags-global-abbreviate-filename 150)
 (add-hook 'python-mode-hook
