@@ -5,8 +5,8 @@
   (add-to-list
    'package-archives
    ;;'("gnu" . "http://elpa.emacs-china.org/gnu/")
-   '("melpa" . "http://elpa.emacs-china.org/melpa/")
-   '("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+   '("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+   '("marmalade" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/marmalade/")
    ;;'("elpy" . "http://jorgenschaefer.github.io/packages/")
    ))
 
@@ -21,16 +21,54 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui ccls lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode javadoc-lookup ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ autodisass-java-bytecode counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+    (yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui ccls lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "D2Coding for Powerline" :foundry "RIXF" :slant normal :weight normal :height 143 :width normal)))))
+;; set default font
+(cond
+ ((string-equal system-type "windows-nt") ; Microsoft Windows
+  (when (member "Consolas" (font-family-list))
+    (set-frame-font "Consolas" t t)))
+ ((string-equal system-type "darwin") ; macOS
+  (when (member "Menlo" (font-family-list))
+    (set-frame-font "Menlo" t t)))
+ ((string-equal system-type "gnu/linux") ; linux
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (set-frame-font "DejaVu Sans Mono" t t))))
+;; set font for emoji
+(set-fontset-font
+ t
+ '(#x1f300 . #x1fad0)
+ (cond
+  ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji")
+  ((member "Noto Emoji" (font-family-list)) "Noto Emoji")
+  ((member "Segoe UI Emoji" (font-family-list)) "Segoe UI Emoji")
+  ((member "Symbola" (font-family-list)) "Symbola")
+  ((member "Apple Color Emoji" (font-family-list)) "Apple Color Emoji"))
+ ;; Apple Color Emoji should be before Symbola, but Richard Stallman disabled it.
+ ;; GNU Emacs Removes Color Emoji Support on the Mac
+ ;; http://ergoemacs.org/misc/emacs_macos_emoji.html
+ ;;
+ )
+;; set font for chinese characters
+(set-fontset-font
+ t
+ '(#x4e00 . #x9fff)
+ (cond
+  ((string-equal system-type "windows-nt")
+   (cond
+    ((member "Microsoft YaHei" (font-family-list)) "Microsoft YaHei")
+    ((member "Microsoft JhengHei" (font-family-list)) "Microsoft JhengHei")
+    ((member "SimHei" (font-family-list)) "SimHei")))
+  ((string-equal system-type "darwin")
+   (cond
+    ((member "Hei" (font-family-list)) "Hei")
+    ((member "Heiti SC" (font-family-list)) "Heiti SC")
+    ((member "Heiti TC" (font-family-list)) "Heiti TC")))
+  ((string-equal system-type "gnu/linux")
+   (cond
+    ((member "WenQuanYi Micro Hei" (font-family-list)) "WenQuanYi Micro Hei")))))
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
@@ -137,28 +175,6 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   '(add-to-list 'company-backends 'company-gtags))
 ;; set company-quickhelp
 (company-quickhelp-mode 1)
-
-;; set java tool meghanada
-(use-package autodisass-java-bytecode
-  :ensure t
-  :defer t)
-;; (use-package meghanada
-;;   :defer t
-;;   :init
-;;   (add-hook 'java-mode-hook
-;;             (lambda ()
-;;               (meghanada-mode t)
-;;               (setq c-default-style "linux"
-;;                     c-basic-offset 4)
-;;               (indent-space-count 4)
-;;               (aggressive-indent-mode 1)))
-;;   )
-
-;; set javadoc lookup
-(global-set-key (kbd "C-h j") 'javadoc-lookup)
-(javadoc-add-artifacts )
-(javadoc-add-roots "/Nuance/Dev/DevTools/jdk1.8.0_162/docs"
-                   "/Nuance/Dev/DevTools/android/docs")
 
 ;; set ivy
 (ivy-mode 1)
@@ -284,16 +300,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (while (pcomplete-here
           (nth 2 (bash-completion-dynamic-complete-nocomint (save-excursion (eshell-bol) (point)) (point))))))
 
-;; set doxymacs
-(require 'doxymacs)
-(add-hook 'c-mode-hook 'doxymacs-mode)
-(add-hook 'c++-mode-hook 'doxymacs-mode)
-(add-hook 'java-mode-hook 'doxymacs-mode)
-(add-hook 'python-mode-hook 'doxymacs-mode)
-
 ;; set elpy
 (elpy-enable)
-(pyvenv-activate "/dj/Tools/binary/miniconda3/envs/fastai-gpu")
 
 ;; set importmagic
 (add-hook 'python-mode-hook 'importmagic-mode)
@@ -314,11 +322,6 @@ https://github.com/jaypei/emacs-neotree/pull/110"
       python-shell-prompt-detect-enabled nil
       python-shell-completion-native-enable nil)
 (require 'ein)
-(require 'ein-loaddefs)
-(require 'ein-notebook)
-(require 'ein-subpackages)
-(setq ein:jupyter-default-notebook-directory "/dj/Dev/DevProj/"
-      ein:worksheet-enable-undo 'full)
 
 ;; set web-mode
 (require 'web-mode)
