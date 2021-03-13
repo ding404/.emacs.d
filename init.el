@@ -16,15 +16,20 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ediff-diff-options "-w")
- '(ediff-split-window-function (quote split-window-horizontally))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
+ '(ediff-split-window-function 'split-window-horizontally)
+ '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   (quote
-    (yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui ccls lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme)))
+   '(yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 ;; set default font
 (cond
  ((string-equal system-type "windows-nt") ; Microsoft Windows
@@ -389,10 +394,6 @@ https://github.com/jaypei/emacs-neotree/pull/110"
             (define-key lsp-mode-map (kbd "C-l i") 'lsp-ui-peek-find-implementation)
             (define-key lsp-mode-map (kbd "C-l w") 'lsp-ui-peek-find-workspace-symbol)
             (define-key lsp-mode-map (kbd "C-l c") 'lsp-ui-peek-find-custom)))
-;; set emacs-ccls
-(require 'ccls)
-(setq ccls-executable "~/.emacs.d/exec/ccls")
-(setq ccls-sem-highlight-method 'font-lock)
 ;;set lsp-treemacs
 (use-package treemacs
   :ensure t
