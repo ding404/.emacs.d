@@ -20,7 +20,7 @@
  '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit counsel-gtags browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company ggtags counsel async swiper paradox material-theme))
+   '(eglot yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company counsel async swiper paradox material-theme))
  '(paradox-github-token t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
@@ -148,16 +148,6 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   (setq tab-stop-list (number-sequence count 200 count))
   (setq tab-width count))
 
-;; set gtags
-(setenv "GTAGSCONF" "/dj/Tools/binary/global/share/gtags/gtags.conf")
-(setenv "GTAGSLABEL" "pygments")
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-              (setq c-default-style "linux"
-                    c-basic-offset 4)
-              (ggtags-mode 1))))
-(setq ggtags-global-abbreviate-filename 150)
 (add-hook 'python-mode-hook
           (lambda ()
             (when (derived-mode-p 'python-mode)
@@ -165,19 +155,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
                     c-basic-offset 4)
               (indent-space-count 4)
               (aggressive-indent-mode 1))))
-;; set gtags view as ivy
-;; (add-hook 'c-mode-hook 'counsel-gtags-mode)
-;; (add-hook 'c++-mode-hook 'counsel-gtags-mode)
-;; (add-hook 'java-mode-hook 'counsel-gtags-mode)
-;; (with-eval-after-load 'counsel-gtags
-;;   (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
-;;   (define-key counsel-gtags-mode-map (kbd "M-]") 'counsel-gtags-find-reference)
-;;   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-;;   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward))
 ;; set company
 (add-hook 'after-init-hook 'global-company-mode)
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-gtags))
 ;; set company-quickhelp
 (company-quickhelp-mode 1)
 
@@ -476,4 +455,8 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   :after treemacs magit
   :ensure t)
 
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
 ;;; init.el ends here
