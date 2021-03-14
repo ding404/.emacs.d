@@ -361,6 +361,11 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   )
 )
 
+;; add org-agenda key bind
+(add-hook 'org-mode-hook
+          (lambda ()
+            (define-key org-mode-map (kbd "C-c C-a") 'org-agenda)))
+
 ;; set lsp-mode
 (require 'lsp-mode)
 (add-hook 'prog-mode-hook #'lsp)
