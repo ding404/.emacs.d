@@ -369,8 +369,7 @@ https://github.com/jaypei/emacs-neotree/pull/110"
  '((emacs-lisp . t)
    (python . t)
    (ruby . t)
-   (C . t)
-   (C++ . t)))
+   (C . t)))
 
 ;; set lsp-mode
 (require 'lsp-mode)
