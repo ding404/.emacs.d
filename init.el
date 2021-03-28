@@ -363,6 +363,15 @@ https://github.com/jaypei/emacs-neotree/pull/110"
           (lambda ()
             (define-key org-mode-map (kbd "C-c C-a") 'org-agenda)))
 
+;; enable language eval in org-mode
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)
+   (ruby . t)
+   (C . t)
+   (C++ . t)))
+
 ;; set lsp-mode
 (require 'lsp-mode)
 (add-hook 'prog-mode-hook #'lsp)
