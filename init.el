@@ -1,11 +1,12 @@
-(package-initialize)
 ;; set package list url
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/") t)
   (add-to-list 'package-archives '("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/") t)
   (add-to-list 'package-archives '("marmalade" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/marmalade/") t)
-  (add-to-list 'package-archives '("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/") t))
+  (add-to-list 'package-archives '("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/") t)
+  (package-initialize)
+  (package-refresh-contents))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
