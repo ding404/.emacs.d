@@ -477,11 +477,12 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (require 'rust-mode)
 (add-hook 'rust-mode-hook
           'cargo-minor-mode
-          (lambda () (setq indent-tabs-mode nil))
-          (lambda () (setq compilation-ask-about-save nil))
-          (setq rust-format-on-save t)
-          (define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
-          (define-key rust-mode-map (kbd "C-c C-r") 'rust-run-release)
-          (define-key rust-mode-map (kbd "C-c C-l") 'rust-run-clippy))
+          (lambda () (setq indent-tabs-mode nil)
+            (setq compilation-ask-about-save nil)
+            (setq rust-format-on-save t)
+            (define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
+            (define-key rust-mode-map (kbd "C-c C-r") 'rust-run-release)
+            (define-key rust-mode-map (kbd "C-c C-l") 'rust-run-clippy))
+          )
 (use-package rustic)
 ;;; init.el ends here
