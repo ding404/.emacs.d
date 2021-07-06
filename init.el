@@ -470,6 +470,11 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq c-basic-offset 4)
+            (setq c-indent-level 4)
+            (setq c-default-style "linux")))
 
 (require 'ox-taskjuggler)
 
