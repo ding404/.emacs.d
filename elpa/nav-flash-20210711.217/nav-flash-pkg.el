@@ -1,0 +1,2 @@
+;;; Generated package description from /home/dj/.emacs.d/elpa/nav-flash-20210711.217/nav-flash.el  -*- no-byte-compile: t -*-
+(define-package "nav-flash" "20210711.217" "Briefly highlight the current line" 'nil :stars '(#("15" 0 2 (font-lock-face paradox-star-face))) :commit "55786c9582410a5637b5635fea022aae564205cd" :authors '(("Roland Walker" . "walker@pobox.com")) :maintainer '("Roland Walker" . "walker@pobox.com") :keywords '("extensions" "navigation" "interface") :url "http://github.com/rolandwalker/nav-flash")
