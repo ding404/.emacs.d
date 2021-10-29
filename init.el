@@ -5,8 +5,7 @@
   (add-to-list 'package-archives '("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/") t)
   (add-to-list 'package-archives '("marmalade" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/marmalade/") t)
   (add-to-list 'package-archives '("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/") t)
-  (package-initialize)
-  (package-refresh-contents))
+  (package-initialize))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -18,7 +17,7 @@
  '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(pyim-basedict pyim lua-mode rustic cargo rust-mode org-plus-contrib eglot yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company counsel async swiper paradox material-theme))
+   '(lsp-java pyim-basedict pyim lua-mode rustic cargo rust-mode org-plus-contrib eglot yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company counsel async swiper paradox material-theme))
  '(paradox-github-token t)
  '(pyim-dicts
    '((:name "pyim-tsinghua-dict" :file "~/.emacs.d/pyim/pyim-tsinghua-dict.pyim")))
@@ -498,3 +497,13 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (global-set-key (kbd "C-\\") 'toggle-input-method)
 (setq pyim-page-tooltip 'popup)
 ;;; init.el ends here
+
+;; set lsp-java start
+(use-package lsp-java
+  :defer t
+  :init
+  (setq lsp-java-server-install-dir
+        "~/.emacs.d/.cache/lsp/jdt-language-server")
+  :hook (java-mode . (lambda ()
+                       (require 'lsp-java))))
+;; set lsp-java end
