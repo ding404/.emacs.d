@@ -3,8 +3,8 @@
   (require 'package)
   (add-to-list 'package-archives '("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/") t)
   (add-to-list 'package-archives '("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/") t)
-  (add-to-list 'package-archives '("marmalade" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/marmalade/") t)
   (add-to-list 'package-archives '("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/") t)
+  (add-to-list 'package-archives '("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/") t)
   (package-initialize))
 
 (custom-set-variables
@@ -17,7 +17,7 @@
  '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(lsp-java pyim-basedict pyim lua-mode rustic cargo rust-mode org-plus-contrib eglot yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company counsel async swiper paradox material-theme))
+   '(dap-mode auto-complete-auctex auctex lsp-java pyim-basedict pyim lua-mode rustic cargo rust-mode org-plus-contrib eglot yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company counsel async swiper paradox material-theme))
  '(paradox-github-token t)
  '(pyim-dicts
    '((:name "pyim-tsinghua-dict" :file "~/.emacs.d/pyim/pyim-tsinghua-dict.pyim")))
@@ -284,7 +284,15 @@ https://github.com/jaypei/emacs-neotree/pull/110"
           (nth 2 (bash-completion-dynamic-complete-nocomint (save-excursion (eshell-bol) (point)) (point))))))
 
 ;; set elpy
-(elpy-enable)
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  (setq elpy-rpc-virtualenv-path "/usr/local/stow/miniconda3/envs/py3"))
+
+;; set pyvenv
+(require 'pyvenv)
+(pyvenv-activate "/usr/local/stow/miniconda3/envs/py3")
 
 ;; set importmagic
 (add-hook 'python-mode-hook 'importmagic-mode)
@@ -498,6 +506,13 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 (setq pyim-page-tooltip 'popup)
 ;;; init.el ends here
 
+;; set dap-mode for java lsp
+(use-package dap-mode
+  :ensure t :after lsp-mode
+  :config
+  (require 'dap-java)
+  (dap-mode t)
+  (dap-ui-mode t))
 ;; set lsp-java start
 (use-package lsp-java
   :defer t
