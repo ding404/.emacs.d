@@ -22,7 +22,8 @@
  '(pyim-dicts
    '((:name "pyim-tsinghua-dict" :file "~/.emacs.d/pyim/pyim-tsinghua-dict.pyim")))
  '(scroll-bar-mode nil)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(warning-suppress-log-types '((lsp-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -340,7 +341,9 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   :after (typescript-mode company flycheck)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
+         (typescript-mode . tide-hl-identifier-mode)))
+(setq typescript-indent-level 2)
+
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -355,7 +358,6 @@ https://github.com/jaypei/emacs-neotree/pull/110"
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 ;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
 (add-hook 'js2-mode-hook #'setup-tide-mode)
 ;; configure javascript-tide checker to run after your default javascript checker
 ;; (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
