@@ -1,3 +1,5 @@
+;;; package --- Summary
+
 ;; set package list url
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -289,11 +291,11 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   :ensure t
   :init
   (elpy-enable)
-  (setq elpy-rpc-virtualenv-path "/usr/local/stow/miniconda3/envs/py3"))
+  (setq elpy-rpc-virtualenv-path "/usr/local"))
 
 ;; set pyvenv
 (require 'pyvenv)
-(pyvenv-activate "/usr/local/stow/miniconda3/envs/py3")
+(pyvenv-activate "/usr/local")
 
 ;; set importmagic
 (add-hook 'python-mode-hook 'importmagic-mode)
