@@ -1,5 +1,6 @@
 ;;; package --- Summary
 
+(setq warning-minimum-level :emergency)
 ;; set package list url
 (when (>= emacs-major-version 24)
   (require 'package)
