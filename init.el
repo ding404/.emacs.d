@@ -20,7 +20,7 @@
  '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(markdown-mode dap-mode auto-complete-auctex auctex lsp-java pyim-basedict pyim lua-mode rustic cargo rust-mode org-plus-contrib eglot yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company counsel async swiper paradox material-theme))
+   '(gptel markdown-mode dap-mode auto-complete-auctex auctex lsp-java pyim-basedict pyim lua-mode rustic cargo rust-mode org-plus-contrib eglot yasnippet-snippets treemacs-evil treemacs-icons-dired treemacs-magit treemacs-projectile treemacs lsp-treemacs yasnippet lsp-ui lsp-mode f clang-format importmagic json-mode tide js2-refactor js2-mode web-mode ein aggressive-indent ivy-hydra imenu-list smex bing-dict p4 elpy psvn monky bash-completion magit browse-kill-ring+ counsel-projectile projectile expand-region multiple-cursors ace-window back-button ace-jump-mode highlight-symbol highlight-parentheses rainbow-delimiters indent-guide smartparens undo-tree all-the-icons-ivy flycheck fancy-battery spaceline all-the-icons neotree company-quickhelp which-key company counsel async swiper paradox material-theme))
  '(paradox-github-token t)
  '(pyim-dicts
    '((:name "pyim-tsinghua-dict" :file "~/.emacs.d/pyim/pyim-tsinghua-dict.pyim")))
@@ -292,11 +292,11 @@ https://github.com/jaypei/emacs-neotree/pull/110"
   :ensure t
   :init
   (elpy-enable)
-  (setq elpy-rpc-virtualenv-path "/usr/local"))
+  (setq elpy-rpc-virtualenv-path "~/miniconda3/envs/py3"))
 
 ;; set pyvenv
 (require 'pyvenv)
-(pyvenv-activate "/usr/local")
+(pyvenv-activate "~/miniconda3/envs/py3")
 
 ;; set importmagic
 (add-hook 'python-mode-hook 'importmagic-mode)
@@ -528,7 +528,56 @@ https://github.com/jaypei/emacs-neotree/pull/110"
                        (require 'lsp-java))))
 ;; set lsp-java end
 
-;; set markdown-mode start
-(custom-set-variables
- '(markdown-command "/usr/bin/pandoc"))
-;; set markdown-mode end
+;; set gptel with DeepSeekstart start
+(defun merge-ordered-lists (lists &optional error-function)
+  ;; Algorithm inspired from
+  ;; [C3](https://en.wikipedia.org/wiki/C3_linearization)
+  (let ((result '()))
+    (setq lists (remq nil lists)) ;Don't mutate the original `lists' argument.
+    (while (cdr (setq lists (delq nil lists)))
+      ;; Try to find the next element of the result. This
+      ;; is achieved by considering the first element of each
+      ;; (non-empty) input list and accepting a candidate if it is
+      ;; consistent with the rests of the input lists.
+      (let* ((next nil)
+	     (tail lists))
+	(while tail
+	  (let ((candidate (caar tail))
+	        (other-lists lists))
+	    ;; Ensure CANDIDATE is not in any position but the first
+	    ;; in any of the element lists of LISTS.
+	    (while other-lists
+	      (if (not (memql candidate (cdr (car other-lists))))
+	          (setq other-lists (cdr other-lists))
+	        (setq candidate nil)
+	        (setq other-lists nil)))
+	    (if (not candidate)
+	        (setq tail (cdr tail))
+	      (setq next candidate)
+	      (setq tail nil))))
+	(unless next ;; The graph is inconsistent.
+	  (setq next (funcall (or error-function #'caar) lists))
+	  (unless (assoc next lists #'eql)
+	    (error "Invalid candidate returned by error-function: %S" next)))
+	;; The graph is consistent so far, add NEXT to result and
+	;; merge input lists, dropping NEXT from their heads where
+	;; applicable.
+	(push next result)
+	(setq lists
+	      (mapcar (lambda (l) (if (eql (car l) next) (cdr l) l))
+		      lists))))
+    (if (null result) (car lists) ;; Common case.
+      (append (nreverse result) (car lists)))))
+(defun cl--class-allparents (class)
+  (cons (cl--class-name class)
+        (merge-ordered-lists (mapcar #'cl--class-allparents
+                                     (cl--class-parents class)))))
+(setq gptel-model   'deepseek-chat
+      gptel-backend
+      (gptel-make-openai "DeepSeek"     ;Any name you want
+        :host "api.deepseek.com"
+        :endpoint "/chat/completions"
+        :stream t
+        :key "sk-e698ea69903e459a8b5c9aa36c71beb4"             ;can be a function that returns the key
+        :models '(deepseek-chat deepseek-coder)))
+;; set gptel end
